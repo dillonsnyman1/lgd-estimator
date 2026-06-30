@@ -125,5 +125,5 @@ jobs:
 
       - name: Deployment summary
         run: |
-          echo "Live demo: https://${{ steps.tf_outputs.outputs.cloudfront_domain }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Live demo: ${{ steps.tf_outputs.outputs.cloudfront_domain }}" >> "$GITHUB_STEP_SUMMARY"
           echo "API: ${{ steps.tf_outputs.outputs.api_url }}" >> "$GITHUB_STEP_SUMMARY"

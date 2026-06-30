@@ -368,8 +368,9 @@ backend image, applies the Terraform config, and publishes the frontend to
 S3/CloudFront. The deploy job runs automatically on every push to `main`, or on
 demand via the Actions tab.
 
-> **Live demo**: [link] - try uploading your own monthly loan-panel CSV or
-> adjusting the LGD assumptions and collateral haircuts.
+> **Live demo**: [d2uq20piibja1m.cloudfront.net](https://d2uq20piibja1m.cloudfront.net) -
+> try uploading your own monthly loan-panel CSV or adjusting the LGD
+> assumptions and collateral haircuts.
 >
 > The backend keeps an in-memory session store between wizard steps: each
 > uploaded panel and its constructed loans are held server-side, keyed by a
