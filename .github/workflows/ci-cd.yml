@@ -73,6 +73,12 @@ jobs:
         working-directory: infra
         run: terraform apply -input=false -auto-approve -target=aws_ecr_repository.backend -var lambda_image_tag=${{ github.sha }}
 
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - uses: docker/setup-buildx-action@v3
+
       - name: Log in to ECR
         run: |
           aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
