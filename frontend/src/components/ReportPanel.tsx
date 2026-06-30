@@ -43,7 +43,7 @@ export function ReportPanel({ panelProfile, defaultsResult, finalResult, finalAs
 
   return (
     <div className="report-panel">
-      <p>Final assumptions, results and an audit trail of the choices made at each step of this build.</p>
+      <p className="step-intro">Final assumptions, results and an audit trail of the choices made at each step of this build.</p>
 
       <SummaryCards summary={finalResult.summary} assumptions={a} />
 

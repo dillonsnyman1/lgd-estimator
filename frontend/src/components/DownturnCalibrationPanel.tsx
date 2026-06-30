@@ -110,7 +110,7 @@ export function DownturnCalibrationPanel({ dataId, assumptions, vintageAnalysis,
 
   return (
     <div className="downturn-calibration-panel">
-      <p>
+      <p className="step-intro">
         Derive a downturn LGD multiplier from stress (higher-LGD) vs benign (lower-LGD) default
         vintages, or enter one manually.
       </p>

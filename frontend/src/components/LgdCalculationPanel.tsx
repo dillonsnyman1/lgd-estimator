@@ -55,7 +55,7 @@ export function LgdCalculationPanel({ dataId, onContinue }: Props) {
 
   return (
     <div className="calculate-lgd-panel">
-      <div className="staging-controls">
+      <div className="assumptions-panel">
         <MethodologySelector
           value={assumptions.methodology}
           onChange={(m) => updateAssumption("methodology", m)}

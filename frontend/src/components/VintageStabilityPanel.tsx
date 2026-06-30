@@ -13,7 +13,7 @@ interface Props {
 export function VintageStabilityPanel({ vintageAnalysis, weightingMethod, onContinue }: Props) {
   return (
     <div className="vintage-stability-panel">
-      <p>
+      <p className="step-intro">
         How default outcomes and LGD have trended by vintage (year of default), and how reliably
         the ex-ante methodologies have predicted realized loss once a default actually resolves.
       </p>

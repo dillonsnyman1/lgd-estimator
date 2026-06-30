@@ -49,7 +49,7 @@ export function DefaultConstructionPanel({ dataId, onContinue }: Props) {
 
   return (
     <div className="construct-defaults-panel">
-      <p>
+      <p className="step-intro">
         Default episodes are identified directly from the panel's <code>default_flag</code> column
         - no inference or cure-confirmation buffer. The flag is treated as authoritative for both
         entry and exit.
