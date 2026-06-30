@@ -88,7 +88,7 @@ jobs:
         working-directory: backend
         run: |
           ECR_URL=$(terraform -chdir=../infra output -raw ecr_repository_url)
-          docker buildx build --platform linux/arm64 -t "$ECR_URL:${{ github.sha }}" --push .
+          docker buildx build --platform linux/arm64 --provenance=false --sbom=false -t "$ECR_URL:${{ github.sha }}" --push .
 
       - name: Terraform apply
         working-directory: infra
