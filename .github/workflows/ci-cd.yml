@@ -1,0 +1,123 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  PROJECT_NAME: lgd-estimator
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r requirements.txt
+        working-directory: backend
+      - run: pytest -q
+        working-directory: backend
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: [backend-test, frontend-build]
+    runs-on: ubuntu-latest
+    outputs:
+      api_url: ${{ steps.tf_outputs.outputs.api_url }}
+      cloudfront_domain: ${{ steps.tf_outputs.outputs.cloudfront_domain }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+
+      - name: Terraform init
+        working-directory: infra
+        run: |
+          terraform init -input=false \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="key=lgd-estimator/terraform.tfstate" \
+            -backend-config="region=${{ env.AWS_REGION }}" \
+            -backend-config="dynamodb_table=${{ vars.TF_LOCK_TABLE }}"
+
+      - name: Ensure ECR repository exists
+        working-directory: infra
+        run: terraform apply -input=false -auto-approve -target=aws_ecr_repository.backend -var lambda_image_tag=${{ github.sha }}
+
+      - name: Log in to ECR
+        run: |
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
+            docker login --username AWS --password-stdin "$(aws sts get-caller-identity --query Account --output text).dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com"
+
+      - name: Build and push backend image
+        working-directory: backend
+        run: |
+          ECR_URL=$(terraform -chdir=../infra output -raw ecr_repository_url)
+          docker buildx build --platform linux/arm64 -t "$ECR_URL:${{ github.sha }}" --push .
+
+      - name: Terraform apply
+        working-directory: infra
+        run: terraform apply -input=false -auto-approve -var lambda_image_tag=${{ github.sha }}
+
+      - name: Capture Terraform outputs
+        id: tf_outputs
+        working-directory: infra
+        run: |
+          echo "api_url=$(terraform output -raw api_gateway_invoke_url)" >> "$GITHUB_OUTPUT"
+          echo "cloudfront_domain=$(terraform output -raw cloudfront_domain_name)" >> "$GITHUB_OUTPUT"
+          echo "frontend_bucket=$(terraform output -raw frontend_bucket_name)" >> "$GITHUB_OUTPUT"
+          echo "distribution_id=$(terraform output -raw cloudfront_distribution_id)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build frontend
+        working-directory: frontend
+        env:
+          VITE_API_BASE_URL: ${{ steps.tf_outputs.outputs.api_url }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Publish frontend to S3
+        run: aws s3 sync frontend/dist "s3://${{ steps.tf_outputs.outputs.frontend_bucket }}" --delete
+
+      - name: Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id "${{ steps.tf_outputs.outputs.distribution_id }}" --paths "/*"
+
+      - name: Deployment summary
+        run: |
+          echo "Live demo: https://${{ steps.tf_outputs.outputs.cloudfront_domain }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "API: ${{ steps.tf_outputs.outputs.api_url }}" >> "$GITHUB_STEP_SUMMARY"
