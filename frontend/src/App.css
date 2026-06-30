@@ -1,0 +1,638 @@
+.app-header {
+  margin-bottom: 28px;
+}
+
+.app-header h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* ── Step navigation ─────────────────────────────────────────────────── */
+
+.step-nav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: var(--shadow);
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+  justify-content: center;
+}
+
+.step-indicator.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.step-indicator.completed {
+  color: var(--accent);
+}
+
+.step-indicator.clickable {
+  cursor: pointer;
+}
+
+.step-indicator.clickable:hover {
+  background: var(--accent-soft);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-indicator.active .step-number,
+.step-indicator.completed .step-number {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+/* ── Upload panel ────────────────────────────────────────────────────── */
+
+.upload-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.upload-section h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.upload-section p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-name {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.primary-button:hover {
+  opacity: 0.9;
+}
+
+.primary-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.toolbar-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+/* ── Upload / segment controls ───────────────────────────────────────── */
+
+.upload-portfolio {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.upload-button,
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.upload-button:hover,
+.link-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.upload-error {
+  color: var(--negative);
+  font-size: 14px;
+  width: 100%;
+}
+
+/* ── Assumptions panels ──────────────────────────────────────────────── */
+
+.assumptions-panel {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.staging-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.staging-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.staging-field input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  font-size: 13px;
+  font-family: var(--mono);
+  color: var(--text-h);
+  width: 90px;
+}
+
+.staging-field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.staging-field input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.field-hint {
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.field-group select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.downturn-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.year-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.year-chip {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.year-chip:hover {
+  border-color: var(--accent);
+}
+
+.year-chip.stress {
+  background: var(--negative);
+  border-color: var(--negative);
+  color: #fff;
+}
+
+.year-chip.benign {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #fff;
+}
+
+.year-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.year-legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-left: 12px;
+}
+
+.year-legend-swatch:first-child {
+  margin-left: 0;
+}
+
+.year-legend-swatch.stress {
+  background: var(--negative);
+}
+
+.year-legend-swatch.benign {
+  background: #22c55e;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.toggle-group {
+  display: flex;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  width: fit-content;
+}
+
+.toggle-btn {
+  padding: 6px 12px;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.toggle-btn + .toggle-btn {
+  border-left: 1px solid var(--border);
+}
+
+.toggle-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.toggle-btn:not(.active):hover {
+  background: var(--accent-soft);
+  color: var(--text-h);
+}
+
+.apply-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.apply-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── Summary cards ───────────────────────────────────────────────────── */
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+
+.summary-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.summary-card-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-h);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.summary-card-sub {
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* ── Charts ──────────────────────────────────────────────────────────── */
+
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.charts-flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.chart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+
+.chart-card h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.chart-note {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.chart-table-wrapper {
+  overflow-x: auto;
+}
+
+/* ── Loan table ──────────────────────────────────────────────────────── */
+
+.table-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+  margin-bottom: 32px;
+}
+
+.table-filter-bar {
+  padding: 14px 16px 0;
+}
+
+.loan-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.loan-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  white-space: nowrap;
+}
+
+.loan-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+.loan-table tr:last-child td {
+  border-bottom: none;
+}
+
+.loan-table tr:hover td {
+  background: var(--accent-soft);
+}
+
+.loan-table .num {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.loan-table .mono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.loan-table .bold {
+  font-weight: 600;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-page {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ── Status badges ───────────────────────────────────────────────────── */
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.status-resolved {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved);
+}
+
+.status-written-off {
+  background: var(--status-written-off-bg);
+  color: var(--status-written-off);
+}
+
+.status-open {
+  background: var(--status-open-bg);
+  color: var(--status-open);
+}
+
+.status-cured {
+  background: var(--status-cured-bg);
+  color: var(--status-cured);
+}
+
+/* observed-to-date LGD for open (still-incomplete) loans - same hue as the "Open" status badge */
+.cell-partial {
+  background: var(--status-open-bg);
+  color: var(--status-open);
+  font-weight: 600;
+}
+
+/* ── Status message ──────────────────────────────────────────────────── */
+
+.status-message {
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.status-message.error {
+  color: var(--negative);
+  border-color: var(--negative);
+}
